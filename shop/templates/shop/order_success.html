@@ -1,0 +1,42 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Заказ успешно оформлен{% endblock %}
+
+{% block content %}
+<div class="order-success">
+    <h1>Спасибо за ваш заказ!</h1>
+    <p>Ваш заказ <strong>№{{ order.id }}</strong> успешно принят и находится в обработке.</p>
+
+    <h2>Детали заказа:</h2>
+    <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }} ({{ item.product.size }})</td>
+                <td>{{ item.quantity }} шт.</td>
+                <td>{{ item.price }} ₽</td>
+                <td>{{ item.get_cost }} ₽</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 style="text-align: right; margin-top: 20px;">
+        Итого к оплате: <strong>{{ order.get_total_cost }} ₽</strong>
+    </h3>
+
+    <p style="margin-top: 30px;">
+        <a href="{% url 'shop:product_list' %}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Вернуться в каталог
+        </a>
+    </p>
+</div>
+{% endblock %}

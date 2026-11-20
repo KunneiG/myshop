@@ -1,0 +1,16 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h1>Корзина</h1>
+<table>
+    {% for item in cart %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }} шт.</td>
+        <td>{{ item.total_price }} ₽</td>
+        <td><a href="{% url 'shop:cart_remove' item.product.id %}">Удалить</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p>Итого: {{ cart.get_total_price }} ₽</p>
+<a href="{% url 'shop:checkout' %}">Оформить заказ</a>
+{% endblock %}
